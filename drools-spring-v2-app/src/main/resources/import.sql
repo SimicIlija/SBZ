@@ -1,0 +1,2 @@
+INSERT INTO user_table (id, user_role, email, password) VALUES (1, 'ADMIN', 'admin@admin', 'admin');
+INSERT INTO user_table (id, user_role, email, password) VALUES (2, 'DOCTOR', 'doctor@doctor', 'doctor');

@@ -1,22 +1,22 @@
 package drools.spring.example.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "user_table")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    private long id;
 
-    protected String email;
+    private String email;
 
-    protected String password;
+    private String password;
 
-    protected UserRole userRole;
+    @Enumerated(value = EnumType.STRING)
+    private UserRole userRole;
 
     public User() {
     }
