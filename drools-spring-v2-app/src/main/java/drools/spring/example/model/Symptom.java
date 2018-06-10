@@ -29,4 +29,12 @@ public class Symptom {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Symptom{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
