@@ -1,6 +1,10 @@
 package drools.spring.example.model;
 
+import org.eclipse.sisu.Nullable;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Entity
 public class Symptom {
@@ -11,7 +15,14 @@ public class Symptom {
 
     private String description;
 
+    @Column(name = "DOUBLE_VALUE")
+    private double value;
+
     public Symptom() {
+    }
+
+    public Symptom(String description) {
+        this.description = description;
     }
 
     public long getId() {
@@ -28,6 +39,14 @@ public class Symptom {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
     @Override

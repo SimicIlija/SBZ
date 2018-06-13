@@ -1,6 +1,7 @@
 package drools.spring.example.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class Visit {
     private Date date;
 
     public Visit() {
+        symptoms = new ArrayList<>();
     }
 
     public long getId() {
