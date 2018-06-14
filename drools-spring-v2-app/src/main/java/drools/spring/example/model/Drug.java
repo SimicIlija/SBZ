@@ -1,6 +1,7 @@
 package drools.spring.example.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,7 @@ public class Drug {
     private DrugType drugType;
 
     public Drug() {
+        ingredientList = new ArrayList<>();
     }
 
     public long getId() {

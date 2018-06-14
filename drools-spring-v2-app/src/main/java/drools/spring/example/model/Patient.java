@@ -1,6 +1,8 @@
 package drools.spring.example.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Patient {
@@ -13,7 +15,14 @@ public class Patient {
 
     private String lastName;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "ALLERGIES",
+            joinColumns = {@JoinColumn(name = "PATIENT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "DI_ID")})
+    private List<DrugIngredient> allergies;
+
     public Patient() {
+        allergies = new ArrayList<>();
     }
 
     public long getId() {
@@ -38,6 +47,14 @@ public class Patient {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<DrugIngredient> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(List<DrugIngredient> allergies) {
+        this.allergies = allergies;
     }
 }
 
