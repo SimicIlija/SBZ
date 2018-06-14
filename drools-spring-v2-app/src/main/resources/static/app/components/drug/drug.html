@@ -1,0 +1,60 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>
+            Lekovi:
+        </h3>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Tip</th>
+                <th>Obrisi</th>
+                <th>Izmeni</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="di in drugVm.list">
+            <th>
+                {{di.name}}
+            </th>
+            <th>
+                {{drugVm.translate(di.drugType)}}
+            </th>
+            <th>
+                <button type="button" class="btn btn-link" ng-click="drugVm.deleteDI(di.id)">
+                    Obrisi
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link" ng-click="drugVm.startEdit(di.id)">
+                    Izmeni
+                </button>
+            </th>
+        </tbody>
+    </table>
+    <div>
+        <h3>Dodaj novi simptom:</h3>
+        <input type="text" class="form-control" id="di" ng-model="drugVm.dto.name">
+        <select ng-model="drugVm.selected">
+            <option ng-repeat="x in drugVm.types">{{drugVm.translate(x)}}</option>
+        </select>
+        <span>
+            <button type="button" class="btn btn-primary" ng-click="drugVm.createNew()">
+                Dodaj
+            </button>
+        </span>
+    </div>
+
+    <div ng-show="drugVm.showEdit">
+        <h3>Izmeni simptom:</h3>
+        <input type="text" class="form-control" id="di" ng-model="drugVm.editDto.name">
+        <select ng-model="drugVm.editSelected">
+            <option ng-repeat="x in drugVm.types">{{drugVm.translate(x)}}</option>
+        </select>
+        <span>
+            <button type="button" class="btn btn-primary" ng-click="drugVm.updateDI()">
+                Izmeni
+            </button>
+        </span>
+    </div>
+</div>

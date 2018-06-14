@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Drug {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DRUG_ID")
     private long id;
 

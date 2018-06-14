@@ -63,6 +63,18 @@
                     controllerAs: "symptomsVm"
                 }
             }
+        }).state('drug', {
+            url: "/drug",
+            data: {
+                pageTitle: "Lek"
+            },
+            views: {
+                'content@': {
+                    templateUrl: "app/components/drug/drug.html",
+                    controller: "drugController",
+                    controllerAs: "drugVm"
+                }
+            }
         }).state('404', {
             url: "/404",
             data: {
