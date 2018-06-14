@@ -1,10 +1,6 @@
 package drools.spring.example.model;
 
-import org.eclipse.sisu.Nullable;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Entity
 public class Symptom {

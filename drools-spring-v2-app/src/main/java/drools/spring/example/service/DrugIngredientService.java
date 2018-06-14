@@ -34,7 +34,7 @@ public class DrugIngredientService {
 
     public DrugIngredient createNewDI(DrugIngredientDto diDto) {
         if (diDto.getName() == null || diDto.getName().trim().equals("")) {
-            throw new BadRequestException("Empty input");
+            throw new BadRequestException("Prazan input");
         }
         DrugIngredient drugIngredient = new DrugIngredient();
         drugIngredient.setIngredient(diDto.getName());
@@ -43,16 +43,16 @@ public class DrugIngredientService {
 
 
     public DrugIngredient updateIngredient(Long id, DrugIngredientDto diDto) {
-        DrugIngredient drugIngredient = repository.findById(id).orElseThrow(() -> new BadRequestException("No di with id"));
+        DrugIngredient drugIngredient = repository.findById(id).orElseThrow(() -> new BadRequestException("Ne postoji sastojak"));
         if (diDto.getName() == null || diDto.getName().trim().equals("")) {
-            throw new BadRequestException("Empty input");
+            throw new BadRequestException("Prazan input");
         }
         drugIngredient.setIngredient(diDto.getName());
         return repository.save(drugIngredient);
     }
 
     public void deleteDI(Long id) {
-        DrugIngredient drugIngredient = repository.findById(id).orElseThrow(() -> new BadRequestException("No di with id"));
+        DrugIngredient drugIngredient = repository.findById(id).orElseThrow(() -> new BadRequestException("Ne postoji sastojak"));
         List<Drug> drugs = drugRepository.findAll();
         List<Patient> patients = patientRepository.findAll();
         for(Drug drug:drugs){

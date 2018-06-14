@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>
+            Sastojci za lekove:
+        </h3>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Obrisi</th>
+                <th>Izmeni</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="di in diVm.list">
+            <th>
+                {{di.ingredient}}
+            </th>
+            <th>
+                <button type="button" class="btn btn-link" ng-click="diVm.deleteDI(di.id)">
+                    Obrisi
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link" ng-click="diVm.startEdit(di.id)">
+                    Izmeni
+                </button>
+            </th>
+        </tbody>
+    </table>
+    <div>
+        <h3>Dodaj novi sastojak:</h3>
+        <input type="text" class="form-control" id="di" ng-model="diVm.dto.name">
+        <span>
+            <button type="button" class="btn btn-primary" ng-click="diVm.createNew()">
+                Dodaj
+            </button>
+        </span>
+    </div>
+
+    <div ng-show="diVm.showEdit">
+            <h3>Izmeni sastojak:</h3>
+            <input type="text" class="form-control" id="di" ng-model="diVm.editDto.name">
+            <span>
+                <button type="button" class="btn btn-primary" ng-click="diVm.updateDI()">
+                    Izmeni
+                </button>
+            </span>
+        </div>
+</div>

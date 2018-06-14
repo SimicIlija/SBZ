@@ -51,6 +51,18 @@
                     controllerAs: "diVm"
                 }
             }
+        }).state('symptoms', {
+            url: "/symptoms",
+            data: {
+                pageTitle: "Simptom"
+            },
+            views: {
+                'content@': {
+                    templateUrl: "app/components/symptoms/symptoms.html",
+                    controller: "symptomsController",
+                    controllerAs: "symptomsVm"
+                }
+            }
         }).state('404', {
             url: "/404",
             data: {
