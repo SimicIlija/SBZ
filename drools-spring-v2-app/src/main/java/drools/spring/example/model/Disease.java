@@ -1,7 +1,6 @@
 package drools.spring.example.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Disease {
@@ -11,18 +10,6 @@ public class Disease {
     private long id;
 
     private String name;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "GENERAL_SYMPTOMS_DISEASE",
-            joinColumns = {@JoinColumn(name = "DISEASE_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "SYMPTOM_ID")})
-    private List<Symptom> generalSymptoms;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "SPECIFIC_SYMPTOMS_DISEASE",
-            joinColumns = {@JoinColumn(name = "DISEASE_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "SYMPTOM_ID")})
-    private List<Symptom> specificSymptoms;
 
     public Disease() {
     }
@@ -43,20 +30,5 @@ public class Disease {
         this.name = name;
     }
 
-    public List<Symptom> getGeneralSymptoms() {
-        return generalSymptoms;
-    }
-
-    public void setGeneralSymptoms(List<Symptom> generalSymptoms) {
-        this.generalSymptoms = generalSymptoms;
-    }
-
-    public List<Symptom> getSpecificSymptoms() {
-        return specificSymptoms;
-    }
-
-    public void setSpecificSymptoms(List<Symptom> specificSymptoms) {
-        this.specificSymptoms = specificSymptoms;
-    }
 }
 

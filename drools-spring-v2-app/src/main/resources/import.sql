@@ -2,6 +2,8 @@ INSERT INTO user_table (id, user_role, email, password) VALUES (1, 'ADMIN', 'adm
 INSERT INTO user_table (id, user_role, email, password) VALUES (2, 'DOCTOR', 'doctor@doctor', 'doctor');
 
 INSERT INTO doctor (id) VALUES (2);
+INSERT INTO administrator (id) VALUES (1);
+
 
 INSERT INTO drug_ingredient (DI_ID, INGREDIENT) VALUES (1, 'sastojak1');
 INSERT INTO drug_ingredient (DI_ID, INGREDIENT) VALUES (2, 'sastojak2');
@@ -18,8 +20,6 @@ INSERT INTO symptom (SYMPTOM_ID, DESCRIPTION, DOUBLE_VALUE) VALUES (9, 'Zuti sek
 INSERT INTO symptom (SYMPTOM_ID, DESCRIPTION, DOUBLE_VALUE) VALUES (10, 'Gubitak apetita', 0.0);
 INSERT INTO symptom (SYMPTOM_ID, DESCRIPTION, DOUBLE_VALUE) VALUES (11, 'Bol koji se siri do usiju', 0.0);
 
-
-
 INSERT INTO patient (PATIENT_ID, FIRST_NAME, LAST_NAME) VALUES (1, 'IME1', 'PREZIME1');
 INSERT INTO patient (PATIENT_ID, FIRST_NAME, LAST_NAME) VALUES (2, 'IME2', 'PREZIME2');
 
@@ -33,8 +33,3 @@ INSERT INTO drug_ingredients_list (DRUG_ID, DI_ID) VALUES (2, 1);
 
 INSERT INTO disease (DISEASE_ID, NAME) VALUES (1, 'Prehlada');
 INSERT INTO disease (DISEASE_ID, NAME) VALUES (2, 'Groznica');
-
-INSERT INTO general_symptoms_disease (DISEASE_ID, SYMPTOM_ID) VALUES (1, 1);
-INSERT INTO general_symptoms_disease (DISEASE_ID, SYMPTOM_ID) VALUES (1, 2);
-INSERT INTO general_symptoms_disease (DISEASE_ID, SYMPTOM_ID) VALUES (2, 1);
-INSERT INTO general_symptoms_disease (DISEASE_ID, SYMPTOM_ID) VALUES (2, 2);
