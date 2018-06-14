@@ -75,6 +75,18 @@
                     controllerAs: "drugVm"
                 }
             }
+        }).state('disease', {
+            url: "/disease",
+            data: {
+                pageTitle: "Bolesti"
+            },
+            views: {
+                'content@': {
+                    templateUrl: "app/components/disease/disease.html",
+                    controller: "diseaseController",
+                    controllerAs: "diseaseVm"
+                }
+            }
         }).state('404', {
             url: "/404",
             data: {

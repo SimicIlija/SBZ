@@ -33,7 +33,7 @@
         </tbody>
     </table>
     <div>
-        <h3>Dodaj novi simptom:</h3>
+        <h3>Dodaj novi lek:</h3>
         <input type="text" class="form-control" id="di" ng-model="drugVm.dto.name">
         <select ng-model="drugVm.selected">
             <option ng-repeat="x in drugVm.types">{{drugVm.translate(x)}}</option>
@@ -46,7 +46,7 @@
     </div>
 
     <div ng-show="drugVm.showEdit">
-        <h3>Izmeni simptom:</h3>
+        <h3>Izmeni lek:</h3>
         <input type="text" class="form-control" id="di" ng-model="drugVm.editDto.name">
         <select ng-model="drugVm.editSelected">
             <option ng-repeat="x in drugVm.types">{{drugVm.translate(x)}}</option>

@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>
+                Bolesti:
+            </h3>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Ime</th>
+                    <th>Obrisi</th>
+                    <th>Izmeni</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="di in diseaseVm.list">
+                <th>
+                    {{di.name}}
+                </th>
+                <th>
+                    <button type="button" class="btn btn-link" ng-click="diseaseVm.deleteDI(di.id)">
+                        Obrisi
+                    </button>
+                </th>
+                <th>
+                    <button type="button" class="btn btn-link" ng-click="diseaseVm.startEdit(di.id)">
+                        Izmeni
+                    </button>
+                </th>
+            </tbody>
+        </table>
+        <div>
+            <h3>Dodaj novu bolest:</h3>
+            <input type="text" class="form-control" id="di" ng-model="diseaseVm.dto.name">
+            <span>
+                <button type="button" class="btn btn-primary" ng-click="diseaseVm.createNew()">
+                    Dodaj
+                </button>
+            </span>
+        </div>
+    
+        <div ng-show="diseaseVm.showEdit">
+                <h3>Izmeni bolest:</h3>
+                <input type="text" class="form-control" id="di" ng-model="diseaseVm.editDto.name">
+                <span>
+                    <button type="button" class="btn btn-primary" ng-click="diseaseVm.updateDI()">
+                        Izmeni
+                    </button>
+                </span>
+            </div>
+    </div>
