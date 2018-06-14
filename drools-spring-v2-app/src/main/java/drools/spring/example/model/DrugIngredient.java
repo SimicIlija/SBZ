@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class DrugIngredient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DI_ID")
     private long id;
 

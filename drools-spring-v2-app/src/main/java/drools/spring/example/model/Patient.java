@@ -15,7 +15,7 @@ public class Patient {
 
     private String lastName;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "ALLERGIES",
             joinColumns = {@JoinColumn(name = "PATIENT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DI_ID")})

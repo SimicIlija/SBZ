@@ -20,7 +20,7 @@ public class Visit {
     @JoinColumn(name = "PATIENT_ID")
     private Patient patient;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "VISIT_SYMPTOMS_LIST",
             joinColumns = {@JoinColumn(name = "VISIT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SYMPTOM_ID")})

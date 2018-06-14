@@ -29,9 +29,9 @@ public class UserService {
     }
 
     public User authenticate(LoginDto loginDto) {
-        User user = userRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new AuthorizationException("No email found"));
+        User user = userRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new AuthorizationException("Ne postoji korisnik sa takvim emailom."));
         if (!user.getPassword().equals(loginDto.getPassword())) {
-            throw new AuthorizationException("Bad password");
+            throw new AuthorizationException("Pogresna sifra");
         }
         return user;
     }

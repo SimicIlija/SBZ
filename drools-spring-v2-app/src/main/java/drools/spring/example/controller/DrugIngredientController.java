@@ -42,7 +42,7 @@ public class DrugIngredientController {
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody DrugIngredientDto diDto) {
+    public ResponseEntity<?> updateDI(@PathVariable Long id, @RequestBody DrugIngredientDto diDto) {
         DrugIngredient updateDI = drugIngredientService.updateIngredient(id, diDto);
         return new ResponseEntity<Object>(updateDI, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class DrugIngredientController {
     @RequestMapping(value = "/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteDI(@PathVariable Long id) {
         drugIngredientService.deleteDI(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

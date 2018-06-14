@@ -39,6 +39,18 @@
                     controllerAs: "loginVm"
                 }
             }
+        }).state('di', {
+            url: "/di",
+            data: {
+                pageTitle: "Sastojak leka"
+            },
+            views: {
+                'content@': {
+                    templateUrl: "app/components/drugingredient/di.html",
+                    controller: "DIController",
+                    controllerAs: "diVm"
+                }
+            }
         }).state('404', {
             url: "/404",
             data: {
