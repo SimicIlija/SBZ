@@ -1,0 +1,54 @@
+<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>
+                Pacijenti:
+            </h3>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Obrisi</th>
+                    <th>Izmeni</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="di in patientVm.list">
+                <th>
+                    {{di.firstName}}
+                </th>
+                <th>{{di.lastName}}</th>
+                <th>
+                    <button type="button" class="btn btn-link" ng-click="patientVm.deleteDI(di.id)">
+                        Obrisi
+                    </button>
+                </th>
+                <th>
+                    <button type="button" class="btn btn-link" ng-click="patientVm.startEdit(di.id)">
+                        Izmeni
+                    </button>
+                </th>
+            </tbody>
+        </table>
+        <div>
+            <h3>Dodaj novog pacijenta:</h3>
+            <input type="text" class="form-control" id="di" ng-model="patientVm.dto.firstName">
+            <input type="text" class="form-control" id="di" ng-model="patientVm.dto.lastName">
+            <span>
+                <button type="button" class="btn btn-primary" ng-click="patientVm.createNew()">
+                    Dodaj
+                </button>
+            </span>
+        </div>
+    
+        <div ng-show="patientVm.showEdit">
+                <h3>Izmeni podatke o pacijentu:</h3>
+                <input type="text" class="form-control" id="di" ng-model="patientVm.editDto.firstName">
+                <input type="text" class="form-control" id="di" ng-model="patientVm.editDto.lastName">
+                <span>
+                    <button type="button" class="btn btn-primary" ng-click="patientVm.updateDI()">
+                        Izmeni
+                    </button>
+                </span>
+            </div>
+    </div>
