@@ -1,0 +1,77 @@
+package drools.spring.rules;
+
+import drools.spring.example.model.ReasonInput;
+import drools.spring.example.model.dto.DiseaseDto;
+
+
+rule "ConnectedSymptomsPrehlada"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : prehladaSym)
+        eval($br.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Prehlada", $br.intValue(), 0);
+end
+
+rule "ConnectedSymptomsGroznica"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : groznicaSym)
+        eval($br.intValue() > 0)
+    then
+       $ri.addNewDiseaseDto("Groznica", $br.intValue(), 0);
+end
+
+rule "ConnectedSymptomsUpalaKrajnika"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : upalaKrSym)
+        eval($br.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Upala krajnika", $br.intValue(), 0);
+end
+
+rule "ConnectedSymptomsSinusna"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : sinfSym)
+        eval($br.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Upala krajnika", $br.intValue(), 0);
+end
+
+rule "ConnectedSymptomsHipertenzija"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : hipertenzijaSym)
+        eval($br.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Hipertenzija", $br.intValue(), 0);
+end
+
+rule "ConnectedSymptomsDijabetes"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : dijabetesSym)
+        eval($br.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Dijabetes", $br.intValue(), 0);
+end
+
+rule "ConnectedSymptomsHbb"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : hbbSymGen, $spec : hbbSymSpec)
+        eval($br.intValue() > 0 || $spec.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Hronicna bubrezna bolest", $br.intValue(), $spec.intValue());
+end
+
+rule "ConnectedSymptomsAbp"
+    agenda-group "connected"
+    when
+        $ri:ReasonInput($br : abbSymGen, $spec : abbSymSpec)
+        eval($br.intValue() > 0 || $spec.intValue() > 0)
+    then
+        $ri.addNewDiseaseDto("Hipertenzija", $br.intValue(), $spec.intValue());
+end

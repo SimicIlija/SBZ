@@ -26,11 +26,16 @@ public class SampleAppService {
         input.getSymptoms().add(symptom);
         symptom = new Symptom("Zamor");
         input.getSymptoms().add(symptom);
-        symptom = new Symptom("Gubitak telesne tezine");
+        symptom = new Symptom("Kasalj");
         input.getSymptoms().add(symptom);
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(input);
+        kieSession.getAgenda().getAgendaGroup("simptomi").setFocus();
+        kieSession.fireAllRules();
+        kieSession.insert(input);
+        kieSession.getAgenda().getAgendaGroup("connected").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
+        System.out.println(input);
     }
 }

@@ -10,101 +10,138 @@ import static drools.spring.example.model.ReasonInput.inLast21days;
 import java.util.List;
 import java.util.Date;
 
-rule "SigurnaPrehlada"
-	when
-		$ri : ReasonInput($sym:symptoms)
-        $list: List() from collect(Symptom (description.equals("Curenje iz nosa")
-         || description.equals("Bol u grlu") ||
-         description.equals("Glavobolja") || description.equals("Kijanje") ||
-         description.equals("Kasalj")) from $sym)
-	    eval($list.size() == 5)
-	then
-		System.out.println("PREHLADAAAAAAAA");
-end
-
-rule "SigurnaGroznica"
-	when
-		$ri : ReasonInput($sym:symptoms)
-        $list: List() from collect(Symptom (description.equals("Curenje iz nosa")
-         || description.equals("Bol u grlu") || (description.equals("Temperatura")
-          && value >= 38) || description.equals("Drhtavica") ||
-         description.equals("Glavobolja") || description.equals("Kijanje") ||
-         description.equals("Kasalj")) from $sym)
-	    eval($list.size() == 7)
-	then
-		System.out.println("GROZNICA");
-end
-
-rule "SigurnaUK"
-	when
-		$ri : ReasonInput($sym:symptoms)
-        $list: List() from collect(Symptom (description.equals("Bol u grlu") ||
-        (description.equals("Temperatura") && value >= 40 && value <= 41) ||
-        description.equals("Drhtavica") ||
-          description.equals("Gubitak apetita") ||
-          description.equals("Umor") ||
-          description.equals("Bol koji se siri do usiju") ||
-          description.equals("Zuti sekret iz nosa") ||
-         description.equals("Glavobolja")) from $sym)
-	    eval($list.size() == 8)
-	then
-		System.out.println("Upala krajnika");
-end
-
-rule "SigurnaSI"
+rule "SimptomiPrehlade"
+    agenda-group "simptomi"
 	when
 		$ri : ReasonInput($sym:symptoms, $pv:previousVisits)
-        $list: List() from collect(Symptom (description.equals("Oticanje oko ociju") ||
-            description.equals("Bol u grlu") ||
-        (description.equals("Temperatura") && value >= 38) ||
-          description.equals("Bol koji se siri do usiju") ||
-          description.equals("Zuti sekret iz nosa") ||
-          description.equals("Kasalj") ||
-         description.equals("Glavobolja")) from $sym)
-        exists(Visit ( ReasonInput.inLastSixMonths(date) && (disease.name == "Prehlada" || disease.name == "Grip")) from $pv)
-	    eval($list.size() == 7)
+        $n: Number() from accumulate(
+             Symptom (description.equals("Curenje iz nosa")
+                      || description.equals("Bol u grlu") ||
+                      description.equals("Glavobolja") || description.equals("Kijanje") ||
+                      description.equals("Kasalj")) from $sym,
+             init(int broj = 0;),
+             action(broj++;),
+             result(broj)
+         )
 	then
-		System.out.println("Sinusna infekcija");
+		$ri.setPrehladaSym($n);
 end
+
+rule "SimptomiGroznice"
+    agenda-group "simptomi"
+	when
+		$ri : ReasonInput($sym:symptoms, $pv:previousVisits)
+        $n: Number() from accumulate(
+              Symptom (description.equals("Curenje iz nosa")
+                       || description.equals("Bol u grlu") || (description.equals("Temperatura")
+                        && value >= 38) || description.equals("Drhtavica") ||
+                       description.equals("Glavobolja") || description.equals("Kijanje") ||
+                       description.equals("Kasalj")) from $sym,
+              init(int broj = 0;),
+              action(broj++;),
+              result(broj)
+            )
+	then
+		$ri.setGroznicaSym($n);
+
+end
+
+rule "SimptomiUK"
+    agenda-group "simptomi"
+	when
+		$ri : ReasonInput($sym:symptoms, $pv:previousVisits)
+        $n: Number() from accumulate(
+              Symptom (description.equals("Bol u grlu") ||
+                      (description.equals("Temperatura") && value >= 40 && value <= 41) ||
+                      description.equals("Drhtavica") ||
+                        description.equals("Gubitak apetita") ||
+                        description.equals("Umor") ||
+                        description.equals("Bol koji se siri do usiju") ||
+                        description.equals("Zuti sekret iz nosa") ||
+                       description.equals("Glavobolja")) from $sym,
+              init(int broj = 0;),
+              action(broj++;),
+              result(broj)
+            )
+	then
+		$ri.setUpalaKrSym($n);
+end
+
+rule "SimptomiSI"
+    agenda-group "simptomi"
+	when
+		$ri : ReasonInput($sym:symptoms, $pv:previousVisits)
+	    $n1: Number() from accumulate(
+              Symptom (description.equals("Oticanje oko ociju") ||
+                          description.equals("Bol u grlu") ||
+                      (description.equals("Temperatura") && value >= 38) ||
+                        description.equals("Bol koji se siri do usiju") ||
+                        description.equals("Zuti sekret iz nosa") ||
+                        description.equals("Kasalj") ||
+                       description.equals("Glavobolja")) from $sym,
+              init(int broj = 0;),
+              action(broj++;),
+              result(broj)
+            )
+        $n2: Number() from accumulate(
+                           Visit ( ReasonInput.inLastSixMonths(date)
+                            && (disease.name == "Prehlada" || disease.name == "Grip")) from $pv,
+                           init(int broj = 0;),
+                           action(broj = 1;),
+                           result(broj)
+                         )
+	then
+		$ri.setSinfSym($n1.intValue() + $n2.intValue());
+end
+
 /**
 Druga grupa
 */
-rule "Hipertenzija"
+rule "SimptomiHipertenzija"
+    agenda-group "simptomi"
 	when
 		$ri : ReasonInput($pv:previousVisits)
-		$n : Number(intValue >= 10) from accumulate ( Visit (ReasonInput.inLastSixMonths(date) && $sym:symptoms) from $pv,
-		    init(int number = 0;),
+		$n : Number() from accumulate ( Visit (ReasonInput.inLastSixMonths(date) && $sym:symptoms) from $pv,
+		    init(int number = 0; int symCount = 0;),
 		    action(for(Object symptom:$sym){
 		        if(((Symptom)symptom).getDescription().equals("Visok pritisak")){
 		            number++;
+		            if(number == 10){
+		                symCount = 1;
+		            }
 		        }
 		    }),
-		    result(number)
+		    result(symCount)
 		)
 	then
-		System.out.println($n);
+		$ri.setHipertenzijaSym($n);
 end
 
-rule "Dijabetes"
+rule "SimptomiDijabetes"
+    agenda-group "simptomi"
 	when
 		$ri : ReasonInput($sym:symptoms, $pv:previousVisits)
-        $list: List() from collect(Symptom (description.equals("Cesto uriniranje") ||
-            description.equals("Mucnina i povracanje") ||
-          description.equals("Zamor") ||
-         description.equals("Gubitak telesne tezine")) from $sym)
-	    eval($list.size() == 4)
+	    $n: Number() from accumulate(
+                      Symptom (description.equals("Cesto uriniranje") ||
+                                  description.equals("Mucnina i povracanje") ||
+                                description.equals("Zamor") ||
+                               description.equals("Gubitak telesne tezine")) from $sym,
+                      init(int broj = 0;),
+                      action(broj++;),
+                      result(broj)
+                    )
 	then
-		System.out.println("Dijabetes");
+		$ri.setDijabetesSym($n);
 end
 
 /**
 * Treca grupa
 */
 rule "HronicnaBubreznaBolest"
+    agenda-group "simptomi"
     when
         $ri : ReasonInput($sym:symptoms, $pv:previousVisits)
-        exists(Visit (( ReasonInput.inLastSixMonths(date) && disease.name == "Hipertenzija") || (disease.name == "Dijabetes")) from $pv)
-        Number(intValue >= 2) from accumulate(
+        $opsti: Number() from accumulate(
             Symptom(description.equals("Nocturia") ||
                                 description.equals("Otoci nogu i zglobova") ||
                               description.equals("Zamor") ||
@@ -114,14 +151,23 @@ rule "HronicnaBubreznaBolest"
             action(number++;),
             result(number)
         )
+        $spec: Number() from accumulate(
+                    Visit (( ReasonInput.inLastSixMonths(date) && disease.name == "Hipertenzija")
+                            || (disease.name == "Dijabetes")) from $pv,
+                    init(int number = 0;),
+                    action(number = 1;),
+                    result(number)
+                )
     then
-        System.out.println("HronicnaBubreznaBolest");
+        $ri.setHbbSymGen($opsti);
+        $ri.setHbbSymSpec($spec);
 end
 
 rule "AkutnaBubreznaPovreda"
+    agenda-group "simptomi"
     when
         $ri : ReasonInput($sym:symptoms, $pv:previousVisits)
-        Number(intValue >= 2) from accumulate(
+        $opsti: Number() from accumulate(
             Symptom(description.equals("Dijareja") ||
                                 description.equals("Otoci nogu i zglobova") ||
                               description.equals("Zamor") ||
@@ -130,30 +176,30 @@ rule "AkutnaBubreznaPovreda"
             action(number++;),
             result(number)
         )
-        $d: Boolean() from accumulate(
+        $spec: Number() from accumulate(
             Symptom (description.equals("Oporavak")) from $sym,
-            init(boolean present = false;),
-            action(present = true;),
+            init(int present = 0;),
+            action(present = 1;),
             result(present)
         )
-        $d2: Boolean() from accumulate(
+        $spec2: Number() from accumulate(
             Visit ( ReasonInput.inLast21days(date) && drug.drugType.equals(DrugType.Antibiotic)
             )from $pv,
-            init(boolean present = false;),
-            action(present = true;),
+            init(int present = 0;),
+            action(present = 1;),
             result(present)
         )
-        $d3 : Boolean() from accumulate ( Visit (ReasonInput.inLast14days(date) && $sym2:symptoms) from $pv,
-        		    init(boolean present = false;),
+        $spec3 : Number() from accumulate ( Visit (ReasonInput.inLast14days(date) && $sym2:symptoms) from $pv,
+        		    init(int present = 0;),
         		    action(for(Object symptom:$sym2){
         		        if(((Symptom)symptom).getDescription().equals("Temperatura")){
-        		            present = true;
+        		            present = 1;
         		        }
         		    }),
         		    result(present)
         		)
-        eval($d || $d2 || $d3)
     then
-        System.out.println("Akutna Bubrezna Povreda");
+        $ri.setAbbSymGen($opsti);
+        $ri.setAbbSymSpec($spec.intValue() + $spec2.intValue() + $spec3.intValue());
 end
 
