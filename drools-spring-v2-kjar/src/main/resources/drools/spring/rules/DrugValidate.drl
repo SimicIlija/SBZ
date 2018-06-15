@@ -1,0 +1,21 @@
+package drools.spring.rules;
+dialect  "mvel"
+import drools.spring.example.model.DrugValidationInput;
+import drools.spring.example.model.DrugIngredient;
+import java.util.Collections;
+
+rule "DrugValidate"
+    agenda-group "drug"
+    when
+        $dvi: DrugValidationInput($druglist : drugIngredients, $patientlist : allergies)
+        $b: Boolean() from accumulate
+            ($di:DrugIngredient () from $druglist,
+            init(boolean present = false;),
+            action(if($patientlist.contains($di)){
+                present = true;
+            }),
+            result(present)
+        )
+    then
+        System.out.println($b);
+end

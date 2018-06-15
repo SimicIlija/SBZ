@@ -34,4 +34,6 @@ INSERT INTO drug_ingredients_list (DRUG_ID, DI_ID) VALUES (2, 1);
 INSERT INTO disease (DISEASE_ID, NAME) VALUES (1, 'Prehlada');
 INSERT INTO disease (DISEASE_ID, NAME) VALUES (2, 'Groznica');
 
+INSERT INTO allergies (PATIENT_ID, DI_ID) VALUES (1, 2);
+
 
