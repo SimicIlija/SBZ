@@ -14,7 +14,9 @@ public class ReasonInput {
 
     private List<Visit> previousVisits;
 
-    private List<Disease> possibleDisease;
+    private Disease firstDisease;
+    private Disease thirdDisease;
+    private List<Disease> secondDiseases;
 
     private List<DiseaseDto> connectedDisease;
 
@@ -41,7 +43,7 @@ public class ReasonInput {
     public ReasonInput() {
         symptoms = new ArrayList<>();
         previousVisits = new ArrayList<>();
-        possibleDisease = new ArrayList<>();
+        secondDiseases = new ArrayList<>();
         connectedDisease = new ArrayList<>();
     }
 
@@ -61,12 +63,28 @@ public class ReasonInput {
         this.previousVisits = previousVisits;
     }
 
-    public List<Disease> getPossibleDisease() {
-        return possibleDisease;
+    public Disease getFirstDisease() {
+        return firstDisease;
     }
 
-    public void setPossibleDisease(List<Disease> possibleDisease) {
-        this.possibleDisease = possibleDisease;
+    public void setFirstDisease(Disease firstDisease) {
+        this.firstDisease = firstDisease;
+    }
+
+    public Disease getThirdDisease() {
+        return thirdDisease;
+    }
+
+    public void setThirdDisease(Disease thirdDisease) {
+        this.thirdDisease = thirdDisease;
+    }
+
+    public List<Disease> getSecondDiseases() {
+        return secondDiseases;
+    }
+
+    public void setSecondDiseases(List<Disease> secondDiseases) {
+        this.secondDiseases = secondDiseases;
     }
 
     public Number getPrehladaSym() {
@@ -181,28 +199,14 @@ public class ReasonInput {
         return date.after(min) && date.before(max);
     }
 
-    @Override
-    public String toString() {
-        return "ReasonInput{" +
-                "symptoms=" + symptoms +
-                ", previousVisits=" + previousVisits +
-                ", possibleDisease=" + possibleDisease +
-                ", connectedDisease=" + connectedDisease +
-                ", prehladaSym=" + prehladaSym +
-                ", groznicaSym=" + groznicaSym +
-                ", upalaKrSym=" + upalaKrSym +
-                ", sinfSym=" + sinfSym +
-                ", hipertenzijaSym=" + hipertenzijaSym +
-                ", dijabetesSym=" + dijabetesSym +
-                ", hbbSymGen=" + hbbSymGen +
-                ", hbbSymSpec=" + hbbSymSpec +
-                ", abbSymGen=" + abbSymGen +
-                ", abbSymSpec=" + abbSymSpec +
-                '}';
-    }
-
     public void addNewDiseaseDto(String name, Number number, Number specific) {
         DiseaseDto diseaseDto = new DiseaseDto(name, number, specific);
         this.connectedDisease.add(diseaseDto);
+    }
+
+    public void addFirstDisease(String name) {
+        Disease disease = new Disease();
+        disease.setName(name);
+        firstDisease = disease;
     }
 }

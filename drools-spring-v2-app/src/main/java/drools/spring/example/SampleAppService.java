@@ -9,6 +9,9 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 @Service
 public class SampleAppService {
@@ -27,21 +30,22 @@ public class SampleAppService {
     }
 
     public void testVisitRule() {
-        Symptom symptom = new Symptom("Cesto uriniranje");
         ReasonInput input = new ReasonInput();
-        input.getSymptoms().add(symptom);
-        symptom = new Symptom("Mucnina i povracanje");
-        input.getSymptoms().add(symptom);
-        symptom = new Symptom("Zamor");
-        input.getSymptoms().add(symptom);
-        symptom = new Symptom("Kasalj");
-        input.getSymptoms().add(symptom);
+        Visit visit = new Visit();
+        Drug drug = drugRepository.findById(1L).orElseThrow(NotFoundException::new);
+        Disease disease = new Disease();
+        disease.setName("Naziv");
+        visit.setDisease(disease);
+        visit.setDrug(drug);
+        visit.getSymptoms().add(new Symptom("Visok pritisak"));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, -10);
+        Date date = calendar.getTime();
+        visit.setDate(date);
+        input.getPreviousVisits().add(visit);
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(input);
         kieSession.getAgenda().getAgendaGroup("simptomi").setFocus();
-        kieSession.fireAllRules();
-        kieSession.insert(input);
-        kieSession.getAgenda().getAgendaGroup("connected").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
         System.out.println(input);

@@ -21,7 +21,7 @@ public class SampleAppController {
 
     @RequestMapping(value = "/test3", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Symptom> test3() {
-        sampleService.testDrugRule();
+        sampleService.testVisitRule();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
