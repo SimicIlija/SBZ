@@ -1,0 +1,32 @@
+package drools.spring.rules;
+
+import drools.spring.example.model.ReportInput;
+import drools.spring.example.model.Visit;
+import drools.spring.example.model.Patient;
+import drools.spring.example.model.Disease;
+import java.util.List;
+import java.util.Date;
+
+declare PacijentBolest
+    patient: Patient
+    bolest: Disease
+    count: Number
+end
+
+rule "hronicnaOboljenja"
+    agenda-group "hronicnaOboljenja"
+    when
+        $p:Patient( )
+        $d: Disease( )
+        $ri:ReportInput( $visits: visits)
+        $list: List() from collect(
+        Visit( disease.name != "Prehlada" && disease.name != "Groznica" && ReportInput.inLastTwoYears(date))
+        from $visits)
+        $result: List() from collect(
+        Visit(patient == $p && disease == $d)
+        from $list)
+        eval ($result.size()>=5)
+    then
+       System.out.println("HRONICNO");
+       $ri.getHronicni().add($p.getId());
+end
