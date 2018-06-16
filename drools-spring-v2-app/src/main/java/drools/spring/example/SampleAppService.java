@@ -136,4 +136,16 @@ public class SampleAppService {
         kieSession.fireAllRules();
         kieSession.dispose();
     }
+
+    public void testDisRule() {
+        DiseaseInput input = new DiseaseInput();
+        Disease disease = new Disease();
+        disease.setName("Hronicna bubrezna bolest");
+        input.setDisease(disease);
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(input);
+        kieSession.getAgenda().getAgendaGroup("bolesti").setFocus();
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
 }
