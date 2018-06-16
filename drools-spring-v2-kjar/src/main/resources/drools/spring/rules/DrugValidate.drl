@@ -18,4 +18,5 @@ rule "DrugValidate"
         )
     then
         System.out.println($b);
+        $dvi.setResult($b);
 end

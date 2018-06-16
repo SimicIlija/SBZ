@@ -46,7 +46,7 @@ rule "GetSymptomsSI"
     when
         $di: DiseaseInput(disease.name == "Sinusna infekcija")
     then
-        $di.addNewSymptom("Specifični zahtev, u kartonu (sitemu) treba da stoji da je pacijent bolovao od prehlade ili\n" +
+        $di.addNewSymptom("Specifični zahtev, u kartonu (sitemu) treba da stoji da je pacijent bolovao od prehlade ili " +
                            "groznice u poslednjih 60 dana.");
         $di.addNewSymptom("Kasalj");
         $di.addNewSymptom("Temperatura veca od 38 0C");
@@ -95,7 +95,7 @@ rule "GetSymptomsAbp"
         $di: DiseaseInput(disease.name == "Akutna bubrezna povreda")
     then
         $di.addNewSymptom("*Oporavlja se od operacije");
-        $di.addNewSymptom("*U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu\n" +
+        $di.addNewSymptom("*U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu " +
                            "temperaturu");
         $di.addNewSymptom("*U poslednjih 21 dana dijagnostikovana bolest za koju je primao antibiotike");
         $di.addNewSymptom("Dijareja");

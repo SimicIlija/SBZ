@@ -73,5 +73,5 @@ rule "ConnectedSymptomsAbp"
         $ri:ReasonInput($br : abbSymGen, $spec : abbSymSpec)
         eval($br.intValue() > 0 || $spec.intValue() > 0)
     then
-        $ri.addNewDiseaseDto("Hipertenzija", $br.intValue(), $spec.intValue());
+        $ri.addNewDiseaseDto("Akutna bubrezna povreda", $br.intValue(), $spec.intValue());
 end
