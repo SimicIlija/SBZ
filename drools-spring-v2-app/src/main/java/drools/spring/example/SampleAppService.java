@@ -132,7 +132,7 @@ public class SampleAppService {
         for (User user : doctors) {
             kieSession.insert((Doctor) user);
         }
-        kieSession.getAgenda().getAgendaGroup("zavisnici").setFocus();
+        kieSession.getAgenda().getAgendaGroup("slabimunitet").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
     }

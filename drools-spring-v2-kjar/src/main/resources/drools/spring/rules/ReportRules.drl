@@ -12,12 +12,8 @@ import java.util.List;
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.ArrayList;
 
-declare PacijentBolest
-    patient: Patient
-    bolest: Disease
-    count: Number
-end
 
 rule "hronicnaOboljenja"
     agenda-group "hronicnaOboljenja"
@@ -59,4 +55,39 @@ rule "zavisnici"
     then
         System.out.println("Zavisnici");
         $ri.getZavisnici().add($p.getId());
+end
+
+rule "slabimunitet"
+    agenda-group "slabimunitet"
+    when
+        $ri:ReportInput( $visits: visits)
+        $p : Patient()
+        $last12Months: List() from collect(
+                    Visit(ReasonInput.inLastSixMonths(date) && patient == $p) from $visits
+                    )
+        $drugiLekovi: List() from accumulate(
+             $v: Visit(drug.drugType == DrugType.Analgesic || drug.drugType == DrugType.Other ) from $last12Months,
+             init(List lista = new ArrayList();),
+             action(lista.add($p);),
+             result(lista)
+        )
+        $samoAntibiotici: List() from accumulate(
+            $v:Visit() from $last12Months,
+            init(List lista = new ArrayList();),
+            action(if(!$drugiLekovi.contains($p)){
+                lista.add($v);
+            }),
+            result(lista)
+        )
+        eval($samoAntibiotici.size() >= 10)
+        $setBolesti: Set() from accumulate(
+            $v:Visit($dis : disease) from $samoAntibiotici,
+            init(Set bolesti = new HashSet();),
+            action(bolesti.add($dis);),
+            result(bolesti)
+        )
+        eval($setBolesti.size() >= 2)
+    then
+        System.out.println("IMUNITET");
+        $ri.getImunitet().add($p.getId());
 end
