@@ -103,14 +103,14 @@ rule "SimptomiHipertenzija"
 	when
 		$ri : ReasonInput($pv:previousVisits)
 		$n : Number() from accumulate ( Visit (ReasonInput.inLastSixMonths(date) && $sym:symptoms) from $pv,
-		    init(int number = 0;),
-		    action(for(Object symptom:$sym){
-		        if(((Symptom)symptom).getDescription().equals("Visok pritisak")){
-		            number++;
-		        }
-		    }),
-		    result(number)
-		)
+        		    init(int number = 0;),
+        		    action(for(Object symptom:$sym){
+        		        if(((Symptom)symptom).getDescription().equals("Visok pritisak")){
+        		            number++;
+        		        }
+        		    }),
+        		    result(number)
+        )
 	then
 	    System.out.println($n);
 		$ri.setHipertenzijaSym($n);
@@ -138,7 +138,7 @@ end
 /**
 * Treca grupa
 */
-/*
+
 rule "HronicnaBubreznaBolest"
     agenda-group "simptomi"
     when
@@ -204,4 +204,4 @@ rule "AkutnaBubreznaPovreda"
         $ri.setAbbSymGen($opsti);
         $ri.setAbbSymSpec($spec.intValue() + $spec2.intValue() + $spec3.intValue());
 end
-*/
+

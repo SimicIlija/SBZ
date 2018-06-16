@@ -1,5 +1,5 @@
 package drools.spring.rules;
-dialect  "mvel"
+
 import drools.spring.example.model.DrugValidationInput;
 import drools.spring.example.model.DrugIngredient;
 import java.util.Collections;
