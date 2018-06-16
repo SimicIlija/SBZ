@@ -99,6 +99,18 @@
                         controllerAs: "patientVm"
                     }
                 }
+            }).state('users', {
+                url: "/users",
+                data: {
+                    pageTitle: "Korisnici"
+                },
+                views: {
+                    'content@': {
+                        templateUrl: "app/components/user/user.html",
+                        controller: "userController",
+                        controllerAs: "userVm"
+                    }
+                }
             }).state('404', {
                 url: "/404",
                 data: {

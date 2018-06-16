@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>
+            Korisnici:
+        </h3>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Sifra</th>
+                <th>Tip</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="di in userVm.list">
+            <th>
+                {{di.email}}
+            </th>
+            <th>{{di.password}}</th>
+            <th>{{di.userRole}}</th>
+        </tbody>
+    </table>
+    <div>
+        <h3>Dodaj novog korisnika:</h3>
+        <input type="text" class="form-control" placeholder="Email" ng-model="userVm.dto.email">
+        <input type="text" class="form-control" placeholder="Sifra"  ng-model="userVm.dto.password">
+        <select ng-model="userVm.selected">
+            <option ng-repeat="x in userVm.types">{{x}}</option>
+        </select>
+        <br>
+        <span>
+            <button type="button" class="btn btn-primary" ng-click="userVm.createNew()">
+                Dodaj
+            </button>
+        </span>
+    </div>
+
+</div>

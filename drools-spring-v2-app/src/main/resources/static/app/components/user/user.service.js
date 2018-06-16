@@ -10,10 +10,9 @@
     function userService($http, CONFIG) {
         var service = {
             auth: auth,
-            /*findBy: findBy,
             getAll: getAll,
-            update: update,
-            logout: logout*/
+            createNew: createNew,
+            logout: logout
         };
 
         return service;
@@ -28,30 +27,8 @@
                 });
         }
 
-        /*function findBy(id) {
-            return $http.get(CONFIG.SERVICE_URL + '/users/' + id)
-                .then(function success(response) {
-                    return response.data;
-                })
-                .catch(function error(response) {
-                    throw response.data;
-                });
-        }
-
         function getAll() {
-            return $http.get(CONFIG.SERVICE_URL + '/users')
-                .then(function success(response) {
-                    return response.data;
-                })
-                .catch(function error(response) {
-                    throw response.data;
-                });
-        }
-
-        function update(id, role) {
-            return $http.post(CONFIG.SERVICE_URL + '/users/' + id, {
-                message: role
-            })
+            return $http.get(CONFIG.SERVICE_URL + 'api/users')
                 .then(function success(response) {
                     return response.data;
                 })
@@ -68,7 +45,17 @@
                 .catch(function error(response) {
                     throw response.data;
                 });
-        }*/
+        }
+
+        function createNew(dto) {
+            return $http.post(CONFIG.SERVICE_URL + 'api/users', dto)
+                .then(function success(response) {
+                    return response.data;
+                })
+                .catch(function error(response) {
+                    throw response.data;
+                });
+        }
 
     }
 })();
