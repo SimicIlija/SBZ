@@ -78,4 +78,29 @@ public class SampleAppService {
         kieSession.getAgenda().getAgendaGroup("drug").setFocus();
         kieSession.fireAllRules();
     }
+
+    public void testTrecuGrupu() {
+        ReasonInput input = new ReasonInput();
+        Visit visit = new Visit();
+        Drug drug = drugRepository.findById(1L).orElseThrow(NotFoundException::new);
+        Disease disease = new Disease();
+        disease.setName("Dijabetes");
+        visit.setDisease(disease);
+        visit.setDrug(drug);
+        input.getSymptoms().add(new Symptom("Zamor"));
+        input.getSymptoms().add(new Symptom("Nocturia"));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, -10);
+        Date date = calendar.getTime();
+        visit.setDate(date);
+        input.getPreviousVisits().add(visit);
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(input);
+        kieSession.getAgenda().getAgendaGroup("simptomi").setFocus();
+        kieSession.fireAllRules();
+        kieSession.insert(input);
+        kieSession.getAgenda().getAgendaGroup("diagnose").setFocus();
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
 }

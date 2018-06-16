@@ -66,3 +66,24 @@ rule "SelectDijabetes"
         System.out.println("Dijabetes");
         $ri.addSecondDisease("Dijabetes");
 end
+
+
+rule "SelectHBB"
+    agenda-group "diagnose"
+    when
+        $ri:ReasonInput($opsti:hbbSymGen.intValue(), $spec:hbbSymSpec.intValue(), thirdDisease == null)
+        eval($spec >= 1 && $opsti >= 2)
+    then
+        System.out.println("Hronicna bubrezna bolest");
+        $ri.addThirdDisease("Hronicna bubrezna bolest");
+end
+
+rule "SelectABB"
+    agenda-group "diagnose"
+    when
+        $ri:ReasonInput($opsti:abbSymGen.intValue(), $spec:abbSymSpec.intValue(), thirdDisease == null)
+        eval($spec >= 1 && $opsti >= 2)
+    then
+        System.out.println("Akutna bubrezna povreda");
+        $ri.addThirdDisease("Akutna bubrezna povreda");
+end
