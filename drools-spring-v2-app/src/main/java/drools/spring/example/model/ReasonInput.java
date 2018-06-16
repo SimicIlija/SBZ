@@ -209,4 +209,10 @@ public class ReasonInput {
         disease.setName(name);
         firstDisease = disease;
     }
+
+    public void addSecondDisease(String name) {
+        Disease disease = new Disease();
+        disease.setName(name);
+        secondDiseases.add(disease);
+    }
 }

@@ -38,6 +38,10 @@ public class SampleAppService {
         visit.setDisease(disease);
         visit.setDrug(drug);
         visit.getSymptoms().add(new Symptom("Visok pritisak"));
+        input.getSymptoms().add(new Symptom("Cesto uriniranje"));
+        input.getSymptoms().add(new Symptom("Gubitak telesne tezine"));
+        input.getSymptoms().add(new Symptom("Zamor"));
+        input.getSymptoms().add(new Symptom("Mucnina i povracanje"));
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DATE, -10);
         Date date = calendar.getTime();

@@ -50,8 +50,19 @@ end
 rule "Selecthipertenziju"
     agenda-group "diagnose"
     when
-        $ri:ReasonInput($br:hipertenzijaSym)
-        eval($br.intValue() >= 10)
+        $ri:ReasonInput($br:hipertenzijaSym.intValue())
+        eval($br >= 10)
     then
         System.out.println("Hipertenzija");
+        $ri.addSecondDisease("Hipertenzija");
+end
+
+rule "SelectDijabetes"
+    agenda-group "diagnose"
+    when
+        $ri:ReasonInput($br:dijabetesSym.intValue())
+        eval($br == 4)
+    then
+        System.out.println("Dijabetes");
+        $ri.addSecondDisease("Dijabetes");
 end
