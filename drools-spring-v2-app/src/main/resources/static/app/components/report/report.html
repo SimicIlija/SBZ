@@ -1,0 +1,68 @@
+<div>
+    <button type="button" class="btn btn-primary" ng-click="reportVm.getHr()">Hronicni</button>
+    <button type="button" class="btn btn-primary" ng-click="reportVm.getZa()">Zavisni</button>
+    <button type="button" class="btn btn-primary" ng-click="reportVm.getIm()">Imunitet</button>
+</div>
+<div class="panel panel-default" ng-show="reportVm.showHr()">
+    <div class="panel-heading">
+        <h3>
+            Pacijenti sa hronicnim oboljenjinama:
+        </h3>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="di in reportVm.hronicni">
+            <th>
+                {{di.firstName}}
+            </th>
+            <th>{{di.lastName}}</th>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-default" ng-show="reportVm.showZa()">
+    <div class="panel-heading">
+        <h3>
+            Pacijenti moguci zavisnici:
+        </h3>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="di in reportVm.zavisni">
+            <th>
+                {{di.firstName}}
+            </th>
+            <th>{{di.lastName}}</th>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-default" ng-show="reportVm.showIm()">
+    <div class="panel-heading">
+        <h3>
+            Pacijenti sa slabim imunitetom:
+        </h3>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="di in reportVm.imunitet">
+            <th>
+                {{di.firstName}}
+            </th>
+            <th>{{di.lastName}}</th>
+        </tbody>
+    </table>
+</div>

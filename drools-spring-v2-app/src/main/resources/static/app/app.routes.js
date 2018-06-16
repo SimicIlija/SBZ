@@ -111,6 +111,18 @@
                         controllerAs: "userVm"
                     }
                 }
+            }).state('report', {
+                url: "/report",
+                data: {
+                    pageTitle: "Izvestaji"
+                },
+                views: {
+                    'content@': {
+                        templateUrl: "app/components/report/report.html",
+                        controller: "reportController",
+                        controllerAs: "reportVm"
+                    }
+                }
             }).state('404', {
                 url: "/404",
                 data: {
