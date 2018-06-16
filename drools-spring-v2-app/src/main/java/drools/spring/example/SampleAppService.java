@@ -2,15 +2,13 @@ package drools.spring.example;
 
 import drools.spring.example.controller.exception.NotFoundException;
 import drools.spring.example.model.*;
-import drools.spring.example.repository.DiseaseRepository;
-import drools.spring.example.repository.DrugRepository;
-import drools.spring.example.repository.PatientRepository;
-import drools.spring.example.repository.VisitRepository;
+import drools.spring.example.repository.*;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +30,9 @@ public class SampleAppService {
 
     @Autowired
     private DiseaseRepository diseaseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public SampleAppService(KieContainer kieContainer) {
@@ -119,6 +120,7 @@ public class SampleAppService {
         input.setVisits(all);
         List<Disease> diseases = diseaseRepository.findAll();
         List<Patient> patients = patientRepository.findAll();
+        List<User> doctors = userRepository.findByUserRole(UserRole.DOCTOR);
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(input);
         for (Disease disease : diseases) {
@@ -127,7 +129,10 @@ public class SampleAppService {
         for (Patient patient : patients) {
             kieSession.insert(patient);
         }
-        kieSession.getAgenda().getAgendaGroup("hronicnaOboljenja").setFocus();
+        for (User user : doctors) {
+            kieSession.insert((Doctor) user);
+        }
+        kieSession.getAgenda().getAgendaGroup("zavisnici").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
     }

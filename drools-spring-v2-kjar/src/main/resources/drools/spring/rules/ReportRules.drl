@@ -1,11 +1,17 @@
 package drools.spring.rules;
 
 import drools.spring.example.model.ReportInput;
+import drools.spring.example.model.ReasonInput;
+import drools.spring.example.model.DrugType;
 import drools.spring.example.model.Visit;
 import drools.spring.example.model.Patient;
 import drools.spring.example.model.Disease;
+import drools.spring.example.model.Doctor;
+import static drools.spring.example.model.ReasonInput.inLastSixMonths;
 import java.util.List;
 import java.util.Date;
+import java.util.Set;
+import java.util.HashSet;
 
 declare PacijentBolest
     patient: Patient
@@ -29,4 +35,28 @@ rule "hronicnaOboljenja"
     then
        System.out.println("HRONICNO");
        $ri.getHronicni().add($p.getId());
+end
+
+rule "zavisnici"
+    agenda-group "zavisnici"
+    when
+        $ri:ReportInput( $visits: visits)
+        $p : Patient()
+        $list: List() from collect(
+            Visit(ReasonInput.inLastSixMonths(date) && drug.drugType == DrugType.Analgesic) from $visits
+        )
+        $samePatient: List() from collect(
+            Visit( patient == $p) from $list
+        )
+        eval($samePatient.size() >= 6)
+        $setLekara: Set() from accumulate(
+            Visit($d : doctor) from $samePatient,
+            init(Set doctors = new HashSet();),
+            action(doctors.add($d);),
+            result(doctors)
+        )
+        eval ($setLekara.size() >= 3)
+    then
+        System.out.println("Zavisnici");
+        $ri.getZavisnici().add($p.getId());
 end
