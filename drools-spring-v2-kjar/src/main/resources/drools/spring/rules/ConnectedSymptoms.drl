@@ -37,7 +37,7 @@ rule "ConnectedSymptomsSinusna"
         $ri:ReasonInput($br : sinfSym)
         eval($br.intValue() > 0)
     then
-        $ri.addNewDiseaseDto("Upala krajnika", $br.intValue(), 0);
+        $ri.addNewDiseaseDto("Sinusna infekcija", $br.intValue(), 0);
 end
 
 rule "ConnectedSymptomsHipertenzija"

@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Visit {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "VISIT_ID")
     private long id;
 

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Symptom {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SYMPTOM_ID")
     private long id;
 

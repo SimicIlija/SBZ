@@ -1,4 +1,74 @@
-<div>
-    <h1>Welcome</h1>
-
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="input-group">
+            <select ng-model="homeVm.patient" ng-options="patient.name for patient in homeVm.patientList"></select>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" ng-click="homeVm.selected()">
+                    Izaberi
+                </button>
+            </span>
+        </div>
+    </div>
+    <div ng-if="homeVm.isSelected">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Doktor</th>
+                    <th>Simptomi</th>
+                    <th>Dijagnoza</th>
+                    <th>Lek</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="di in homeVm.previousVisits">
+                <th>
+                    {{di.doctor.email}}
+                </th>
+                <th>
+                    <span ng-repeat="symptom in di.symptoms">{{$first ? '' : $last ? ' i ' : ', '}}{{symptom.description}}</span>
+                </th>
+                <th>
+                    {{di.disease.name}}
+                </th>
+                <th>
+                    {{di.drug.name}}
+                </th>
+                <th>{{di.date|date:shortDate}}</th>
+            </tbody>
+        </table>
+        <h3>Dodaj simptome:</h3>
+        <form>
+            <input type="text" placeholder="Opis" ng-model="homeVm.symptom.name" />
+            <input type="number" placeholder="Vrednost" ng-model="homeVm.symptom.value" />
+            <button class="btn btn-primary" ng-click="homeVm.addSymptom()">Add</button>
+        </form>
+        <ul>
+            <li ng-repeat="symptom in homeVm.patSymptoms">
+                <span class="fa fa-close" ng-click="homeVm.deleteSymptom($index)"></span>
+                <span>{{symptom.description + " " + symptom.value}}</span>
+            </li>
+        </ul>
+        <div>
+            <button class="btn btn-primary" ng-click="homeVm.getDisease()">Najverovatnija bolest</button>
+            <button class="btn btn-primary" ng-click="homeVm.getConnected()">Povezane bolesti</button>
+            <br>
+            <h6>Najverovatnija bolest:</h6>
+            <span ng-repeat="dis in homeVm.dis1">{{$first ? '' : $last ? ' i ' : ', '}}{{dis.name}}</span>
+            <br>
+            <h6>Povezane bolesti:</h6>
+            <span ng-repeat="dis in homeVm.dis2 | orderBy : 'symptoms + specificSymptoms'">{{$first ? '' : $last ? ' i ' : ', '}}{{dis.name}}</span>
+        </div>
+        <br>
+        <div>
+            <select ng-model="homeVm.disease" ng-options="dis.name for dis in homeVm.allDis"></select>
+            <button class="btn btn-primary" ng-click="homeVm.validateSym()">Proveri bolest</button>
+            <br>
+             <h6>Simptomi:</h6>
+             <span ng-repeat="sym in homeVm.symDis ">{{$first ? '' : $last ? ' i ' : ', '}}{{sym.description}}</span>
+            <br>
+             <select ng-model="homeVm.drug" ng-options="dr.name for dr in homeVm.drugs"></select>
+            <button class="btn btn-primary" ng-click="homeVm.validateDrug()">Proveri alergiju</button>
+        </div>
+        <button class="btn btn-primary" ng-click="homeVm.newVisit()">Postavi dijagnozu</button>
+    </div>
 </div>

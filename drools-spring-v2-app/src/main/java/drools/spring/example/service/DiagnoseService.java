@@ -95,4 +95,13 @@ public class DiagnoseService {
         kieSession.dispose();
         return input.isResult();
     }
+
+    public List<Visit> getVisits(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NotFoundException("ne postoji pacijent"));
+        return visitRepository.findByPatient_Id(patient.getId());
+    }
+
+    public Visit saveVisit(Visit visit) {
+        return visitRepository.save(visit);
+    }
 }

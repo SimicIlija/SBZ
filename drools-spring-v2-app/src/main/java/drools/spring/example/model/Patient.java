@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PATIENT_ID")
     private long id;
 
@@ -15,7 +15,7 @@ public class Patient {
 
     private String lastName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "ALLERGIES",
             joinColumns = {@JoinColumn(name = "PATIENT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DI_ID")})
