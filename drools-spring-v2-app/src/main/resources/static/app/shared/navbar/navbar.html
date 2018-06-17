@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ui-sref="home" ng-if="navbarVm.isDoctor()">Dijagnoza</a>
+      <a class="navbar-brand" ui-sref="users" ng-if="navbarVm.isAdmin()">Korisnici</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a ui-sref="patient" ng-if="!navbarVm.isGuest()">Pacijenti </a></li>
+        <li><a ui-sref="report" ng-if="navbarVm.isDoctor()">Izvestaji </a></li>
+        <li><a ui-sref="drug" ng-if="navbarVm.isDoctor()">Lekovi </a></li>
+        <li><a ui-sref="di" ng-if="navbarVm.isDoctor()">Sastojci </a></li>
+        <li><a ui-sref="disease" ng-if="navbarVm.isDoctor()">Bolesti </a></li>
+        
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" ng-if="navbarVm.isGuest()">
+        <li>
+          <a ui-sref="login" ui-sref-active="active">
+            <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp;Sign in
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-if="!navbarVm.isGuest()">
+        <li>
+            <a ui-sref="myprofile">
+            <i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;{{navbarVm.$storage.user.email}}
+          </a>
+        </li>
+        <li>
+          <a ng-click="navbarVm.logout()">
+          <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>&nbsp;Sign out
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>

@@ -23,7 +23,12 @@
                     .then(function (response) {
                         toastr.success('Uspesno ulogovan', 'Cestitam');
                         $localStorage.user = response;
-                        $location.path('/home');
+                        if($localStorage.user.userRole === 'DOCTOR'){
+                            $location.path('/home');
+                        }else{
+                            $location.path('/users');
+                        }
+                        
                     })
                     .catch(function (response) {
                         toastr.error(response.message, 'Greska');

@@ -16,32 +16,35 @@
 </head>
 
 <body ng-app="cdss">
-<script src="app/app.module.js"></script>
-<script src="app/app.routes.js"></script>
-<script src="app/components/home/home.controller.js"></script>
-<script src="app/components/home/home.service.js"></script>
-<script src="app/components/login/login.controller.js"></script>
-<script src="app/components/errorpage/errorpage.controller.js"></script>
-<script src="app/components/user/user.service.js"></script>
-<script src="app/components/drugingredient/di.controller.js"></script>
-<script src="app/components/drugingredient/di.service.js"></script>
-<script src="app/components/symptoms/symptoms.controller.js"></script>
-<script src="app/components/symptoms/symptoms.service.js"></script>
-<script src="app/components/drug/drug.controller.js"></script>
-<script src="app/components/drug/drug.service.js"></script>
-<script src="app/components/disease/disease.controller.js"></script>
-<script src="app/components/disease/disease.service.js"></script>
-<script src="app/components/patient/patient.controller.js"></script>
-<script src="app/components/patient/patient.service.js"></script>
-<script src="app/components/user/user.service.js"></script>
-<script src="app/components/user/user.controller.js"></script>
-<script src="app/components/report/report.controller.js"></script>
-<script src="app/components/report/report.service.js"></script>
+    <header id="header" ng-include="'app/shared/navbar/navbar.html'" ng-controller="NavbarController as navbarVm">></header>
+    
+    <script src="app/app.module.js"></script>
+    <script src="app/app.routes.js"></script>
+    <script src="app/shared/navbar/navbar.controller.js"></script>
+    <script src="app/components/home/home.controller.js"></script>
+    <script src="app/components/home/home.service.js"></script>
+    <script src="app/components/login/login.controller.js"></script>
+    <script src="app/components/errorpage/errorpage.controller.js"></script>
+    <script src="app/components/user/user.service.js"></script>
+    <script src="app/components/drugingredient/di.controller.js"></script>
+    <script src="app/components/drugingredient/di.service.js"></script>
+    <script src="app/components/symptoms/symptoms.controller.js"></script>
+    <script src="app/components/symptoms/symptoms.service.js"></script>
+    <script src="app/components/drug/drug.controller.js"></script>
+    <script src="app/components/drug/drug.service.js"></script>
+    <script src="app/components/disease/disease.controller.js"></script>
+    <script src="app/components/disease/disease.service.js"></script>
+    <script src="app/components/patient/patient.controller.js"></script>
+    <script src="app/components/patient/patient.service.js"></script>
+    <script src="app/components/user/user.service.js"></script>
+    <script src="app/components/user/user.controller.js"></script>
+    <script src="app/components/report/report.controller.js"></script>
+    <script src="app/components/report/report.service.js"></script>
 
-<section id="main" ui-view="content"></section>
-<!--bootstrap and jquery -->
-<script src="assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <section id="main" ui-view="content"></section>
+    <!--bootstrap and jquery -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
